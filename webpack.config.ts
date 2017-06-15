@@ -1,4 +1,4 @@
-import { Configuration } from 'webpack'
+import { Configuration, optimize } from 'webpack'
 import * as path from 'path'
 import * as HtmlWebpackPlugin from 'html-webpack-plugin'
 
@@ -28,7 +28,12 @@ const config: Configuration = {
         test: /\.css$/,
         use: [
           'style-loader',
-          'css-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: true
+            }
+          },
         ]
       }
     ]
@@ -37,7 +42,8 @@ const config: Configuration = {
     extensions: ['.ts', '.tsx', '.js']
   },
   plugins: [
-    new HtmlWebpackPlugin()
+    new HtmlWebpackPlugin(),
+    new optimize.UglifyJsPlugin()
   ],
 }
 
